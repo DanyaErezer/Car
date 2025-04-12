@@ -16,7 +16,7 @@ class Employee extends Model
     ];
     public function comfortCategories(): BelongsToMany
     {
-        return $this->belongsToMany(CarComfortCategory::class, 'comfort_category_employee');
+        return $this->belongsToMany(CarComfortCategory::class, 'employee_comfort_categories');
     }
 
     public function bookings(): HasMany

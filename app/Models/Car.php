@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Car extends Model
 {
     use HasFactory;
-    protected $table = [
+    protected $fillable = [
         'model',
         'driver_id',
         'car_comfort_category_id',

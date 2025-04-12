@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Driver extends Model
 {
     use HasFactory;
-    protected $table = 'name';
+    protected $fillable = ['name'];
 
     public function cars(): HasMany
     {

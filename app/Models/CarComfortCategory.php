@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class CarComfortCategory extends Model
 {
     use HasFactory;
-    protected $table = 'name';
+    protected $fillable = ['name'];
 
     public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(Employee::class, 'comfort_category_employee');
+        return $this->belongsToMany(Employee::class, 'employee_comfort_categories');
     }
 
     public function cars(): HasMany

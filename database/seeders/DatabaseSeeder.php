@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Car;
+use App\Models\CarBooking;
+use App\Models\CarComfortCategory;
+use App\Models\Driver;
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +16,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $categories = CarComfortCategory::factory()->count(3)->create();
+        $employees = Employee::factory()->count(5)->create();
+        $drivers = Driver::factory()->count(5)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        foreach ($employees as $employee) {
+            $employee->comfortCategories()->attach(
+                $categories->random(rand(1, 2))->pluck('id')
+            );
+        }
+
+        $cars = Car::factory()
+            ->count(5)
+            ->make()
+            ->each(function ($car) use ($drivers, $categories) {
+                $car->driver_id = $drivers->random()->id;
+                $car->car_comfort_category_id = $categories->random()->id;
+                $car->save();
+            });
+        // Пример бронирования
+        $employee = $employees->first();
+        CarBooking::create([
+            'employee_id' => $employee->id,
+            'car_id' => $cars->first()->id,
+            'start_at' => now()->addHours(1),
+            'ends_at' => now()->addHours(3),
         ]);
     }
 }
