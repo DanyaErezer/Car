@@ -22,7 +22,7 @@ class AvailableCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'starts_at' => ['required', 'date', 'after:now'],
+            'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
             'model' => ['nullable', 'string'],
             'comfort_category_id' => ['nullable', 'exists:car_comfort_categories,id'],

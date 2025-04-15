@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class EmployeeFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'position' => $this->faker->jobTitle(),
+            'user_id' => User::factory(),
         ];
     }
 }

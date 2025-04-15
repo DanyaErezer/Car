@@ -17,8 +17,8 @@ class AvailableCarService
             ->when($filters['comfort_category_id'] ?? null, fn ($q, $id) => $q->where('car_comfort_category_id', $id))
             ->whereDoesntHave('bookings', function ($query) use ($filters) {
                 $query->where(function ($q) use ($filters) {
-                    $q->whereBetween('starts_at', [$filters['starts_at'], $filters['ends_at']])
-                        ->orWhereBetween('ends_at', [$filters['starts_at'], $filters['ends_at']]);
+                    $q->where('starts_at', '<', $filters['ends_at'])
+                        ->where('ends_at', '>', $filters['starts_at']);
                 });
             })
             ->with(['driver', 'comfortCategory'])

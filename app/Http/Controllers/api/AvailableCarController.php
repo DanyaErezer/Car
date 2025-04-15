@@ -11,7 +11,11 @@ class AvailableCarController extends Controller
 {
     public function index(AvailableCarRequest $request, AvailableCarService $service): JsonResponse
     {
-        $availableCars = $service->getAvailableCars($request->user(), $request->validated());
+        $employee = $request->user()->employee;
+        if (!$employee) {
+            return response()->json(['error' => 'Employee not found for user'], 404);
+        }
+        $availableCars = $service->getAvailableCars($employee, $request->validated());
 
         return response()->json($availableCars);
     }
